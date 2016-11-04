@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>add person data</title>
+        <style>
+            table, th, td {
+               border: 1px solid black;
+               border-spacing: 0px;
+            }
+            th, td {
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+    	<form action="/updateData" method="POST">
+    	<table>
+            <thead>
+                <tr>
+                	<th>Oracle ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>COS Submitted ?</th>
+                    <th>Visa Appointment Date</th>
+                    <th>Tentative Visa Receive Date</th>
+                    <th>Tentative Travel Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="person : ${personList}">
+                	<td><input type="text" id="oracleID" name="oracleID" th:value="${person.oracleID}"/></td>
+                	<td><input type="text" id="firstName" name="firstName" th:value="${person.firstName}"/></td>
+                	<td><input type="text" id="lastName" name="lastName" th:value="${person.lastName}"/></td>
+                	<td><input type="text" id="cosSubmit" name="cosSubmit" th:value="${person.cosSubmit}"/></td>
+                	<td><input type="text" id="visaDate" name="visaDate" th:value="${person.visaDate}"/></td>
+                	<td><input type="text" id="visaRecieveDate" name="visaRecieveDate" th:value="${person.visaRecieveDate}"/></td>
+                	<td><input type="text" id="travelDate" name="travelDate" th:value="${person.travelDate}"/>
+                	<input type="hidden" id="id" name="id" th:value="${person.id}"/></td>
+                </tr>
+            </tbody>
+        </table>
+    	<br />
+         <input type="submit" />
+        </form>
+    </body>
+</html>
+        

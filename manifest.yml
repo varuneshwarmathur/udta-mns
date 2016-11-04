@@ -1,0 +1,6 @@
+---
+applications:
+  - name: udtamns.org
+    buildpack: java_buildpack
+    path: build/libs/gs-accessing-mongodb-data-rest-0.1.0.jar
+    memory: 350MB

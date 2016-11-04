@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    	<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="shortcut icon" href="favicon.ico"/>
+    	<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,700' rel='stylesheet' type='text/css'/>
+		<link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700italic,700' rel='stylesheet' type='text/css'/>
+		<!-- Animate.css -->
+		<link rel="stylesheet" href="css/animate.css"/>
+		<!-- Flexslider -->
+		<link rel="stylesheet" href="css/flexslider.css"/>
+		<!-- Icomoon Icon Fonts-->
+		<link rel="stylesheet" href="css/icomoon.css"/>
+		<!-- Bootstrap  -->
+		<link rel="stylesheet" href="css/bootstrap.css"/>
+	
+		<link rel="stylesheet" id="theme-switch" href="css/style.css"/>
+		<link rel="stylesheet" href="css/main.css"/>
+		<!-- jQuery -->
+		<script src="js/jquery.min.js"></script>
+		<!-- jQuery Cookie -->
+		<script src="js/jquery.cookie.js"></script>
+		<script>
+		if ( $.cookie('styleCookie') === 'style-light.css') {
+			$('html, body').css('background', '#eeeeee');
+		} else if ($.cookie('styleCookie') === 'style.css') {
+			$('html, body').css('background', '#222222');
+		}
+		</script>
+		<!-- jQuery Easing -->
+		<script src="js/jquery.easing.1.3.js"></script>
+		<!-- Bootstrap -->
+		<script src="js/bootstrap.min.js"></script>
+		<!-- Waypoints -->
+		<script src="js/jquery.waypoints.min.js"></script>
+		<!-- Flexslider -->
+		<script src="js/jquery.flexslider-min.js"></script>
+	
+		<!-- Viewport Units Buggyfill -->
+		<script src="js/viewport-units-buggyfill.js"></script>
+	
+	
+		
+		<!-- Main JS  -->
+		<script src="js/main.js"></script>
+	
+		<!-- Modernizr JS -->
+		<script src="js/modernizr-2.6.2.min.js"></script>
+		<!-- FOR IE9 below -->
+		<!--[if lt IE 9]>
+		<script src="js/respond.min.js"></script>
+		<![endif]-->
+        <title>Udta MNS | Add Person data</title>
+        <style>
+            table, th, td {
+               border: 1px solid black;
+               border-spacing: 0px;
+            }
+            th, td {
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="fh5co-loader"></div>
+    	<div id="fh5co-page">
+    		<div class="js-fh5co-waypoint fh5co-project-detail" id="fh5co-main" data-colorbg="">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row row-bottom-padded-sm animate-box">
+							<div class="col-md-3">
+								<h3 class="fh5co-section-heading"><span class="fh5co-number">Enter the </span> Person Data</h3>
+							</div>
+							<div class="col-md-9">
+								<div class="box-table">
+						    	<form action="/updateAssignData" method="POST">
+						    	<table>
+						            <thead>
+						                <tr>
+						                	<th>Oracle ID</th>
+						                	<th>First Name</th>
+						                	<th>Last Name</th>
+						                    <th>Assignment Start Date</th>
+						                    <th>Assignment End Date</th>
+						                    <th>Visa Renew Date</th>
+						                    <th>Policy Travelled</th>
+						                </tr>
+						            </thead>
+						            <tbody>
+						                <tr th:each="person : ${personList}">
+						                	<td><input type="text" id="oracleID" name="oracleID" th:value="${person.oracleID}"/></td>
+						                	<td><input type="text" id="firstName" name="firstName" th:value="${person.firstName}"/></td>
+						                	<td><input type="text" id="lastName" name="lastName" th:value="${person.lastName}"/></td>
+						                	<td><input type="text" id="assignmentStartDate" name="assignmentStartDate" th:value="${person.assignmentStartDate}"/></td>
+						                	<td><input type="text" id="assignmentEndDate" name="assignmentEndDate" th:value="${person.assignmentEndDate}"/></td>
+						                	<td><input type="text" id="visaRenewDate" name="visaRenewDate" th:value="${person.visaRenewDate}"/></td>
+						                	<td><input type="text" id="policyTravelled" name="policyTravelled" th:value="${person.policyTravelled}"/>
+						                	<input type="hidden" id="id" name="id" th:value="${person.id}"/></td>
+						                </tr>
+						            </tbody>
+							        </table>
+							    	<br />
+							         <input type="submit" />
+							        </form>
+    							</div>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    </body>
+</html>
+        

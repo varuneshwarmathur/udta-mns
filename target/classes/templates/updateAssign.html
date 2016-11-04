@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>add person data</title>
+        <style>
+            table, th, td {
+               border: 1px solid black;
+               border-spacing: 0px;
+            }
+            th, td {
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+    	<form action="/updateAssignData" method="POST">
+    	<table>
+            <thead>
+                <tr>
+                	<th>Oracle ID</th>
+                    <th>Assignment Start Date</th>
+                    <th>Assignment End Date</th>
+                    <th>Visa Renew Date</th>
+                    <th>Apartment Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="person : ${personList}">
+                	<td><input type="text" id="oracleID" name="oracleID" th:value="${person.oracleID}"/></td>
+                	<td><input type="text" id="assignmentStartDate" name="assignmentStartDate" th:value="${person.assignmentStartDate}"/></td>
+                	<td><input type="text" id="assignmentEndDate" name="assignmentEndDate" th:value="${person.assignmentEndDate}"/></td>
+                	<td><input type="text" id="visaRenewDate" name="visaRenewDate" th:value="${person.visaRenewDate}"/></td>
+                	<td><input type="text" id="apartmentType" name="apartmentType" th:value="${person.apartmentType}"/>
+                	<input type="hidden" id="id" name="id" th:value="${person.id}"/></td>
+                </tr>
+            </tbody>
+        </table>
+    	<br />
+         <input type="submit" />
+        </form>
+    </body>
+</html>
+        
