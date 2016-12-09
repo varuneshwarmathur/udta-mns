@@ -24,6 +24,10 @@ public class TravelPoolController {
 		model.addAttribute("personList", repository.findAll());
         return "travelPoolHome";
     }
+	@RequestMapping("/travelRecord")
+	public String getHomePage(Model model) {
+        return "employeeTravelRecord";
+    }
 	@RequestMapping(value ="/addTravelPoolData",  method = RequestMethod.POST)
 	public String addAssignment(@ModelAttribute TravelPool travelPool) {
 		repository.save(travelPool);

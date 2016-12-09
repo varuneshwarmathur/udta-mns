@@ -70,6 +70,7 @@
 			<ul>
 				<li class="animate-box fh5co-active"><a href="home" class="transition">Add Person data</a></li>
 				<li class="animate-box"><a href="/assignHome" class="transition">Add Assignment data</a></li>
+				<li class="animate-box"><a href="/travelPoolHome" class="transition">Add Travel Pool data</a></li>
 			</ul>
 			<a class="style-toggle js-style-toggle" data-style="default" href="#">
 				<span class="fh5co-circle"></span>
@@ -80,7 +81,6 @@
 				<div class="fh5co-text-wrap animate-box">
 					<div class="fh5co-intro-text">
 						<h1>PLease enter the person data</h1>
-						<h2>Crafted by team 1</h2>
 					</div>
 				</div>
 			</div>
@@ -109,6 +109,7 @@
 							            <span>Visa Date </span><input type="text" id="visaDate" name="visaDate" /><br />
 							            <span>Tentative Visa Recieve Date </span><input type="text" id="visaRecieveDate" name="visaRecieveDate" /><br />
 							            <span>Tentative Travel Date </span><input type="text" id="travelDate" name="travelDate" /> <br/>
+							            <span>Visa Status </span><input type="text" id="visaStatus" name="visaStatus" /> <br/>
 							            <input type="submit" />
 							        </form>
 							    </section>
@@ -129,6 +130,7 @@
 						                    <th>Visa Appointment Date</th>
 						                    <th>Tentative Visa Receive Date</th>
 						                    <th>Tentative Travel Date</th>
+						                    <th>Visa Status</th>
 						                </tr>
 						            </thead>
 						            <tbody>
@@ -140,6 +142,7 @@
 						                    <td th:text="${person.visaDate}"></td>
 						                    <td th:text="${person.visaRecieveDate}"></td>
 						                    <td th:text="${person.travelDate}"></td>
+						                    <td th:text="${person.visaStatus}"></td>
 						                </tr>
 						            </tbody>
 						        </table>
