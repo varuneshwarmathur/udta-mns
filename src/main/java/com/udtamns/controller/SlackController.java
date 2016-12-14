@@ -33,10 +33,10 @@ public class SlackController {
 	    public String getIndiaPeople(Model model) {
 	        return "IndiaPeopleReport";
 	    }
-		@RequestMapping("/")
+		/*@RequestMapping("/")
 	    public String getHomePage(Model model) {
 	        return "index";
-	    }
+	    }*/
 		@RequestMapping("/managerSectionHome")
 	    public String getVisaStatus(Model model) {
 	        return "managerSectionHome";
