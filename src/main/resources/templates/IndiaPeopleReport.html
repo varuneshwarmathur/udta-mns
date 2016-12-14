@@ -1,89 +1,233 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8"></meta>
-<style>
+	<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css"/>
+	<style>
+		.navbar-brand {
+			padding-top: 1rem;
+			padding-bottom: 1rem; 
+		}
+		
+		.logo {
+			height: 100%;
+			background-color: #ccc;
+		}
+		
+		.btn-secondary {
+			color: #373a3c;
+		    background-color: #fff;
+		    border-color: #ccc;
+		}
+		
+		.btn-secondary.active {
+		    background-color: #e0e0e0;
+		}
+		
+		.btn-secondary:hover {
+		    background-color: #e6e6e6;
+		    border-color: #adadad;
+		}
 
-circle {
-  fill: rgb(31, 119, 180);
-  fill-opacity: .25;
-  stroke: rgb(31, 119, 180);
-  stroke-width: 1px;
-}
+		.btn-secondary.focus, .btn-secondary:focus {
+		    background-color: #e6e6e6;
+		    border-color: #adadad;
+		}
 
-.leaf circle {
-  fill: #ff7f0e;
-  fill-opacity: 1;
-}
-
-text {
-  font: 10px sans-serif;
-}
-
-svg {
-  padding-left: 380px;
-}
-
-body {
-    background-color: black;
-}
-
-</style>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+		.card {
+			background: #999;
+			border-radius: 2px;
+			box-sizing: border-box;
+			border: 1px solid #ddd;
+			cursor: pointer;
+		}
+		
+		.card:hover {
+			border: 1px solid #ccc;
+			background: #888;
+		}
+		
+		.card img {
+			display: block;
+			width: 85%;
+			margin: 1rem auto 0 auto;
+		}
+		
+		.card-block {
+			background: #eee;
+			height: 30px;
+			border-top:  1px solid #ddd;
+			text-align: center;
+			line-height: 30px;
+			vertical-align: middle;
+		}
+		
+		/*.modal-dialog--active {
+			display: block;
+			position: absolute;
+		} */
+		
+		.pool__list {
+			margin: 1em auto;
+		}
+		
+		.modal-body:empty::after {
+			content: 'loading...';
+		}
+	</style>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
-
-<script>
-var diameter = 600,
-    format = d3.format(",d");
-
-var pack = d3.layout.pack()
-    .size([diameter - 4, diameter - 4])
-    .value(function(d) { return d.size; });
-	
-
-var svg = d3.select("body").append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
-	.attr("class", "svg")
-	.append("g")
-    .attr("transform", "translate(2,2)");
-
-
-d3.json("testTravelPoolJson", function(error, root) {
-  if (error) throw error;
-
-  var node = svg.datum(root).selectAll(".node")
-      .data(pack.nodes)
-    .enter().append("g")
-      .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-	node.append("title")
-      .text(function(d) { return d.name + (d.children ? "" : ": " + d.notes); });  
-	node.append("title")
-      .text(function(d) { return d.firstName + (d.children ? "" : ": " + d.notes); });
-	
-	  
-	  
-
-  node.append("circle")
-      .attr("r", function(d) { return d.r; })
-	  .style("fill", function(d) {
-		var returnColor;
-		if(d.eligibleForVisa == "Yes" ){returnColor = "green";}
-		else if(d.eligibleForVisa == "No" ){returnColor = "#ff3300";}
-		return returnColor;
-	  });
-	  
-
-  node.filter(function(d) { return !d.children; }).append("text")
-      .attr("dy", ".3em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.firstName.substring(0, d.r / 3); });
-	  
-});
-
-d3.select(self.frameElement).style("height", diameter + "px");
-</script>
+<body class="container">
+	<nav class="navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/">
+	      	<img src="./MNSHub_files/mndhubLogo.png" alt="TravelHub" class="logo"/>
+	      </a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="IndiaPeopleReport" class="transition active">Check Project Travel Pool</a></li>
+	      <li><a href="travelReport" class="transition">Check Visa Status</a></li>
+	      <li><a href="travelPoolHome" class="transition">Check Traveler Details</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	<div class="jumbotron">
+		<div class="container-fluid">
+	  		<h1>Travel Pool Data</h1>
+	  	</div>
+	</div>
+	<div class="container-fluid">
+		<div id="poolFilters" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="btn-group" role="group" aria-label="Data filter options">
+			  <button type="button" class="btn btn-sm btn-secondary active" value="all">all</button>
+			  <button type="button" class="btn btn-sm btn-secondary" value="QA">QA</button>
+			  <button type="button" class="btn btn-sm btn-secondary" value="Developer">Developer</button>
+			  <button type="button" class="btn btn-sm btn-secondary" value="Site Dev">Site Dev</button>
+			  <button type="button" class="btn btn-sm btn-secondary" value="INFRA">Infra</button>
+			</div>
+		</div>
+		<div class="pool__list row" id="poolList">
+			loading...
+		</div>
+		<div class="modal fade"  id="poolDetailModal" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">x</button>
+					  	<h2 class="modal-title">Details:</h2>
+					</div>
+					<div class="modal-body" id="poolMemberDetail">
+					</div>
+					<div class="modal-footer">
+			         	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		(function(){
+			var travelPoolData;
+			function createView(data, filter) {
+				var result = '';
+				data.children.forEach(function(item) {
+					if( item.children){
+						if(filter) {
+							if( filter === item.name) {
+								item.children.forEach(function(item) {
+									if( item.notes ){
+										result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '" data-hover-toggle="tooltip" title="' + item.notes + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+									} else {
+										result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+									}
+								});
+							}
+						} else {
+							item.children.forEach(function(item) {
+								if( item.notes ){
+									result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '" data-hover-toggle="tooltip" title="' + item.notes + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+								} else {
+									result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+								}
+							});
+						}
+					}
+				});
+				
+				if(result === '') {
+					result += '<div class="alert alert-warning"> No member under this list.</div>';
+				}
+				return result;
+			}
+			
+			function populateView(view){
+				document.getElementById('poolList').innerHTML = view;
+				$('[data-hover-toggle="tooltip"]').tooltip({ trigger: "hover" });
+				$('[data-toggle="modal"]').on('click', function(){
+					$(this).tooltip('hide');
+				});
+			}
+			
+			$(document).ready(function(){
+				$.ajax({
+					url: 'testTravelPoolJson',
+					method: 'GET',
+					success: function(data){
+						travelPoolData = JSON.parse(data);
+					 	var view = createView(travelPoolData);
+					 	populateView(view);
+					},
+					error: function(err){
+						throw err;
+					}
+				});
+				
+				//Details view 
+				$(document.getElementById('poolList')).on('click', '.card', function(){
+					//Todo Open popup with view
+					var itemDetail = $(this).data('details');
+					var selectedUserData; 
+					travelPoolData.children.forEach(function(item) {
+						item.children.forEach(function(item) {
+							if(item.oracleID == itemDetail) {
+								selectedUserData = item;
+								return;
+							}
+						});
+						
+						if(selectedUserData) {
+							return;
+						}
+					});
+					
+					
+					result = '<p><strong>oracleID</strong>: '+(selectedUserData.oracleID || "")+'</p>'+
+				  			'<p><strong>Firstname</strong>: '+( selectedUserData.firstName || "")+'</p>'+
+				  			'<p><strong>Lastname</strong>: '+(selectedUserData.lastName || "")+'</p>'+
+				  			'<p><strong>ValidPassport</strong>: '+(selectedUserData.validPassport ||  "")+'</p>'+
+				  			'<p><strong>EligibleForVisa</strong>: '+(selectedUserData.eligibleForVisa || "")+'</p>'+
+				  			'<p><strong>VisaReady</strong>: '+(selectedUserData.visaReady || "")+'</p>'+
+				  			'<p><strong>domain</strong>: '+(selectedUserData.domain || "")+'</p>'+
+				  			'<p><strong>assignmentType</strong>: '+(selectedUserData.assignmentType || "")+'</p>'+
+				  			'<p><strong>notes</strong>: '+(selectedUserData.notes || "")+'</p>';
+					$(document.getElementById("poolMemberDetail")).html(result);
+				});
+				
+				//Filter type of people
+				$(document.getElementById('poolFilters')).on('click', '.btn-secondary', function(){
+					//TOdo Filter list view
+					$(this).siblings('.active').removeClass('active');
+					var filter = $(this).addClass('active').val();
+					filter = filter === 'all' ? '' : filter;
+					var view = createView(travelPoolData, filter);
+					populateView(view);
+				});
+			});
+		})();
+	</script>
 </body>
 </html>
