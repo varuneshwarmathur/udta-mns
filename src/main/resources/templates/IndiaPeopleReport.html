@@ -139,12 +139,20 @@
 						if(filter) {
 							if( filter === item.name) {
 								item.children.forEach(function(item) {
-									result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+									if( item.notes ){
+										result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '" data-hover-toggle="tooltip" title="' + item.notes + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+									} else {
+										result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+									}
 								});
 							}
 						} else {
 							item.children.forEach(function(item) {
-								result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+								if( item.notes ){
+									result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '" data-hover-toggle="tooltip" title="' + item.notes + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+								} else {
+									result += '<div data-toggle="modal" data-target="#poolDetailModal" class="card col-xs-4 col-sm-3 col-md-2 col-lg-1 text-xs-center" data-details="' + item.oracleID + '"> <img class="image-thumbnail card-img-top" src="images/no-pic.ico" alt="Card image cap"/> <div class="card-block"> <p class="card-text">'+item.firstName+'</p> </div> </div>';
+								}
 							});
 						}
 					}
@@ -158,6 +166,10 @@
 			
 			function populateView(view){
 				document.getElementById('poolList').innerHTML = view;
+				$('[data-hover-toggle="tooltip"]').tooltip({ trigger: "hover" });
+				$('[data-toggle="modal"]').on('click', function(){
+					$(this).tooltip('hide');
+				});
 			}
 			
 			$(document).ready(function(){
